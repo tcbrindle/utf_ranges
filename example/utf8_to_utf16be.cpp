@@ -4,6 +4,7 @@
 
 #include <tcb/ranges/view.hpp>
 #include <tcb/ranges/istreambuf_range.hpp>
+#include <tcb/ranges/ostreambuf_iterator.hpp>
 #include <range/v3/istream_range.hpp>
 #include <range/v3/view/bounded.hpp>
 
@@ -23,14 +24,12 @@ int main(int argc, char** argv)
     std::ifstream in_file{argv[1], std::ios::binary};
     std::ofstream out_file{argv[2], std::ios::binary};
 
-    auto view = utf::istreambuf<char>(in_file)
- //           | utf::view::consume_bom // Remove UTF-8 "BOM" if present
+    auto view = utf::istreambuf(in_file)          // Read range from input stream
+            | utf::view::consume_bom // Remove UTF-8 "BOM" if present
             | utf::view::as_utf16    // Convert to UTF-16
             | utf::view::add_bom     // Prepend UTF-16 BOM to start of range
-            | utf::view::endian_convert<boost::endian::order::big>; // Convert to big-endian
+            | utf::view::endian_convert<boost::endian::order::big> // Convert to big-endian
+            | utf::view::as_bytes;    // Write to disk as bytes
 
-    std::u16string out_str = view;
-
-    out_file.write(reinterpret_cast<const char*>(out_str.data()),
-                   out_str.size() * sizeof(char16_t));
+    rng::copy(view, utf::ostreambuf_iterator<char>{out_file});
 }
