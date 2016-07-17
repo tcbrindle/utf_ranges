@@ -1,0 +1,10 @@
+
+build*/
+
+# QtCreator
+CMakeLists.txt.user
+
+# CLion
+.idea/
+
+
