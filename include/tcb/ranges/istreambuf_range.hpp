@@ -23,51 +23,50 @@ namespace tcb {
 namespace ranges {
 
 namespace rng = ::ranges::v3;
+using rng::static_const;
 
-template<typename Val, typename CharT = char, typename Traits = std::char_traits<CharT>>
+template<typename CharT = char, typename Traits = std::char_traits<CharT>>
 struct istreambuf_range
-  : rng::view_facade<istreambuf_range<Val, CharT, Traits>, rng::unknown>
+  : rng::view_facade<istreambuf_range<CharT, Traits>, rng::unknown>
 {
 private:
     friend rng::range_access;
-    std::basic_streambuf<CharT, Traits> *sin_;
-    rng::semiregular_t<Val> obj_;
+    std::basic_streambuf<CharT, Traits> *sbin_ = nullptr;
     bool done_ = false;
+    typename Traits::int_type obj_{};
 
     struct cursor
     {
     private:
-        istreambuf_range *rng_;
+        istreambuf_range *rng_ = nullptr;
     public:
         cursor() = default;
         explicit cursor(istreambuf_range &rng)
           : rng_(&rng)
         {}
+
         void next()
         {
             rng_->next();
         }
-        Val &get() const noexcept
+
+        CharT get() const noexcept
         {
-            return rng_->cached();
+            return Traits::to_char_type(rng_->obj_);
         }
+
         bool done() const
         {
             return rng_->done_;
         }
-        Val && move() const noexcept
-        {
-            return rng::detail::move(rng_->cached());
-        }
 
     };
+
     void next()
     {
-        if (cached() == Traits::eof()) {
+        obj_ = sbin_->sbumpc();
+        if (obj_ == Traits::eof()) {
             done_ = true;
-        }
-        else {
-            cached() = sin_->sbumpc();
         }
     }
 
@@ -76,60 +75,29 @@ private:
         return cursor{*this};
     }
 
-    istreambuf_range(std::basic_streambuf<CharT, Traits>* sin, Val *)
-      : sin_(sin), obj_{}
-    {}
-    istreambuf_range(std::basic_streambuf<CharT, Traits>* sin, rng::semiregular<Val> *)
-      : sin_(sin), obj_{rng::in_place}
-    {}
 public:
     istreambuf_range() = default;
+
     istreambuf_range(std::basic_istream<CharT, Traits>& sin)
-      : istreambuf_range(sin.rdbuf(), rng::_nullptr_v<rng::semiregular_t<Val>>())
+      : sbin_(sin.rdbuf())
     {
         next(); // prime the pump
     }
-    Val & cached() noexcept
-    {
-        return obj_;
-    }
 };
 
-#if !RANGES_CXX_VARIABLE_TEMPLATES
-template<typename Val, typename CharT, typename Traits>
-istreambuf_range<Val> istreambuf(std::basic_istream<CharT, Traits> & sin)
-{
-    CONCEPT_ASSERT_MSG(rng::DefaultConstructible<Val>(),
-       "Only DefaultConstructible types are extractable from streams.");
-    return istreambuf_range<Val>{sin};
-}
-#else
-template<typename Val, typename CharT, typename Traits,
-        CONCEPT_REQUIRES_(rng::DefaultConstructible<Val>())>
+
 struct istreambuf_fn
 {
-    istreambuf_range<Val> operator()(std::basic_istream<CharT, Traits>& sin) const
+    template <typename CharT, typename Traits>
+    istreambuf_range<CharT, Traits>
+    operator()(std::basic_istream<CharT, Traits>& sin) const
     {
-        return istreambuf_range<Val>{sin};
+        return {sin};
     }
 };
 
-#if RANGES_CXX_INLINE_VARIABLES < RANGES_CXX_INLINE_VARIABLES_17
-inline namespace
-{
-    template <typename Val, typename CharT = char, typename Traits = std::char_traits<CharT>>
-    constexpr auto& istreambuf = static_const<istreambuf_fn<Val, CharT, Traits>>::value;
-}
-#else  // RANGES_CXX_INLINE_VARIABLES >= RANGES_CXX_INLINE_VARIABLES_17
-inline namespace function_objects
-{
-    template <typename Val, typename CharT = char, typename Traits = std::char_traits<CharT>>
-    inline constexpr istreambuf_fn<Val, CharT, Traits> istreambuf{};
-}
-#endif  // RANGES_CXX_INLINE_VARIABLES
+RANGES_INLINE_VARIABLE(istreambuf_fn, istreambuf);
 
-#endif  // RANGES_CXX_VARIABLE_TEMPLATES
-    /// @}
 
 } // end namespace ranges
 } // end namespace tcb
