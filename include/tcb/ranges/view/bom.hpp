@@ -102,6 +102,8 @@ public:
     CONCEPT_REQUIRES(rng::Range<const view_type>())
     auto end() const { return rng::end(view_); }
 
+    concat_range() = default;
+
     concat_range(std::basic_string<value_type> buf,
                  rng::view::all_t<Range> range,
                  boost::endian::order o)
