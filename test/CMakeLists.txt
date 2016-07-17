@@ -6,6 +6,7 @@ add_executable(unicode_ranges_test
     endian_test.cpp
     istreambuf_range_test.cpp
     line_end_transform_test.cpp
+    ostreambuf_iterator_test.cpp
     view_test.cpp
     )
 
