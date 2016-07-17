@@ -48,22 +48,6 @@ inline swap_wrapper<char16_t> endian_reverse(swap_wrapper<char16_t> s) noexcept
 
 namespace view {
 
-#if 0
-template <boost::endian::order DestOrder = boost::endian::order::native,
-          typename Range>
-auto endian_convert(Range&& range,
-                    boost::endian::order src_order = boost::endian::order::native)
-{
-    const auto swapper = [src_order] (auto c){
-        return boost::endian::conditional_reverse(detail::make_swap_wrapper(c),
-                                                  src_order, DestOrder).value;
-    };
-    return rng::view::transform(std::forward<Range>(range),
-                                std::move(swapper));
-}
-
-#endif
-
 template <boost::endian::order DestOrder>
 struct endian_convert_fn {
     template <typename Range>

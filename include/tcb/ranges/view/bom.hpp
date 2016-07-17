@@ -113,58 +113,6 @@ public:
 
 } // end namespace detail
 
-#if 0
-template <typename Range,
-          CONCEPT_REQUIRES_(rng::ForwardRange<Range>())>
-auto consume_bom(Range&& range)
-{
-    using value_type = rng::range_value_t<Range>;
-
-    rng::range_difference_t<Range> bom_size = 0;
-    boost::endian::order byte_order = boost::endian::order::native;
-
-    if (detail::has_bom(range)) {
-        bom_size = detail::bom_size_v<value_type>;
-    } else if (detail::has_swapped_bom(range)) {
-        bom_size = detail::bom_size_v<value_type>;
-        byte_order = detail::nonnative_order;
-    }
-
-    return endian_convert(rng::view::drop(std::forward<Range>(range), bom_size),
-                          byte_order);
-}
-
-
-
-template <typename Range,
-          CONCEPT_REQUIRES_(rng::InputRange<Range>() &&
-                            !rng::ForwardRange<Range>())>
-auto consume_bom(Range&& range)
-{
-    using value_type = rng::range_value_t<Range>;
-    constexpr rng::range_difference_t<Range> bom_size = detail::bom_size_v<value_type>;
-
-    boost::endian::order byte_order = boost::endian::order::native;
-
-    // For InputRanges (only), testing for the BOM will "eat up" the first
-    // character(s) of the range. So save them in a temporary string so that
-    // we can put them back later if it turns out not to be a BOM.
-    std::basic_string<value_type> buf{};
-    rng::copy_n(rng::begin(range), bom_size, rng::back_inserter(buf));
-
-    if (detail::has_bom(buf)) {
-        buf.clear();
-    } else if (detail::has_swapped_bom(buf)) {
-        buf.clear();
-        byte_order = detail::nonnative_order;
-    }
-
-    return detail::concat_range<rng::view::all_t<Range>>{std::move(buf),
-                                                         rng::view::all(std::forward<Range>(range)),
-                                                         byte_order};
-}
-#endif
-
 struct consume_bom_fn {
     template <typename Range,
               CONCEPT_REQUIRES_(rng::ForwardRange<Range>())>
@@ -220,20 +168,6 @@ struct consume_bom_fn {
 };
 
 RANGES_INLINE_VARIABLE(rng::view::view<consume_bom_fn>, consume_bom)
-
-#if 0
-
-template <typename Range>
-auto add_bom(Range&& range)
-{
-    using char_type = rng::range_value_t<Range>;
-    constexpr char32_t bom = U'\uFEFF';
-
-    return rng::view::concat(utf_convert<char_type>(rng::view::single(bom)),
-                             std::forward<Range>(range));
-}
-
-#endif
 
 struct add_bom_fn {
 

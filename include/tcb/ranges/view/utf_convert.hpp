@@ -93,17 +93,6 @@ private:
     friend rng::range_access;
 };
 
-#if 0
-template <typename OutCharT,
-          typename Range,
-          typename InCharT = rng::range_value_t<Range>>
-utf_convert_view<rng::view::all_t<Range>, InCharT, OutCharT>
-utf_convert(Range&& range)
-{
-    return utf_convert_view<rng::view::all_t<Range>, InCharT, OutCharT>{
-            rng::view::all(std::forward<Range>(range))};
-}
-#endif
 
 template <typename OutCharT>
 struct utf_convert_fn {
@@ -175,25 +164,6 @@ struct as_utf32_fn {
 
 RANGES_INLINE_VARIABLE(rng::view::view<as_utf32_fn>, as_utf32);
 
-#if 0
-template <typename Range>
-constexpr inline auto as_utf8(Range&& range)
-{
-    return utf_convert<char>(std::forward<Range>(range));
-}
-
-template <typename Range>
-constexpr inline auto as_utf16(Range&& range)
-{
-    return view::utf_convert<char16_t>(std::forward<Range>(range));
-}
-
-template <typename Range>
-constexpr inline auto as_utf32(Range&& range)
-{
-    return view::utf_convert<char32_t>(std::forward<Range>(range));
-}
-#endif
 
 } // end namespace view
 } // end namespace ranges
