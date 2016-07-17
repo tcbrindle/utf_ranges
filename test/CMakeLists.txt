@@ -1,6 +1,7 @@
 
 add_executable(unicode_ranges_test
     bom_test.cpp
+    bytes_test.cpp
     catch_main.cpp
     endian_test.cpp
     istreambuf_range_test.cpp
