@@ -8,13 +8,21 @@
 #include <tcb/utf_ranges/view.hpp>
 #include <range/v3/algorithm/equal.hpp>
 
+#if __has_include(<experimental/string_view>)
 #include <experimental/string_view>
-
-using namespace tcb::utf_ranges;
 using std::experimental::string_view;
 using std::experimental::u16string_view;
 using std::experimental::u32string_view;
 using std::experimental::wstring_view;
+#else
+#include <boost/utility/string_view.hpp>
+using boost::string_view;
+using u16string_view = boost::basic_string_view<char16_t>;
+using u32string_view = boost::basic_string_view<char32_t>;
+using boost::wstring_view;
+#endif
+
+using namespace tcb::utf_ranges;
 
 #define TEST_STRING "$€0123456789你好abcdefghijklmnopqrstyvwxyz\U0001F60E"
 
