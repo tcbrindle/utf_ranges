@@ -111,7 +111,7 @@ inline namespace
     constexpr auto& utf_convert = static_const<rng::view::view<utf_convert_fn<OutCharT>>>::value;
 }
 
-struct as_utf8_fn {
+struct utf8_fn {
     template <typename Range>
     utf_convert_view<rng::view::all_t<Range>, rng::range_value_t<Range>, char>
     operator()(Range&& range) const
@@ -125,9 +125,9 @@ struct as_utf8_fn {
     }
 };
 
-RANGES_INLINE_VARIABLE(rng::view::view<as_utf8_fn>, as_utf8);
+RANGES_INLINE_VARIABLE(rng::view::view<utf8_fn>, utf8);
 
-struct as_utf16_fn {
+struct utf16_fn {
     template <typename Range>
     utf_convert_view<rng::view::all_t<Range>, rng::range_value_t<Range>, char16_t>
     operator()(Range&& range) const
@@ -141,9 +141,9 @@ struct as_utf16_fn {
     }
 };
 
-RANGES_INLINE_VARIABLE(rng::view::view<as_utf16_fn>, as_utf16);
+RANGES_INLINE_VARIABLE(rng::view::view<utf16_fn>, utf16);
 
-struct as_utf32_fn {
+struct utf32_fn {
     template <typename Range>
     utf_convert_view<rng::view::all_t<Range>, rng::range_value_t<Range>, char32_t>
     operator()(Range&& range) const
@@ -157,7 +157,7 @@ struct as_utf32_fn {
     }
 };
 
-RANGES_INLINE_VARIABLE(rng::view::view<as_utf32_fn>, as_utf32);
+RANGES_INLINE_VARIABLE(rng::view::view<utf32_fn>, utf32);
 
 } // end namespace view
 } // end namespace utf_ranges

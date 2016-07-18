@@ -24,10 +24,10 @@ int main(int argc, char** argv)
 
     auto view = utf::istreambuf(in_file) // Read range from input stream
             | utf::view::consume_bom     // Remove UTF-8 "BOM" if present
-            | utf::view::as_utf16        // Convert to UTF-16
+            | utf::view::utf16           // Convert to UTF-16
             | utf::view::add_bom         // Prepend UTF-16 BOM to start of range
             | utf::view::endian_convert<boost::endian::order::big> // Convert to big-endian
-            | utf::view::as_bytes;       // Write to disk as bytes
+            | utf::view::bytes;          // Write to disk as bytes
 
     rng::copy(view, utf::ostreambuf_iterator<char>{out_file});
 }

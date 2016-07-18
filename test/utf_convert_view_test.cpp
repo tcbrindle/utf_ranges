@@ -34,14 +34,14 @@ TEST_CASE("utf_convert_view can be default constructed", "[view]")
 TEST_CASE("UTF-8 -> UTF-8 view handles empty ranges", "[view]")
 {
     constexpr string_view str{};
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-8 -> UTF-16 view handles empty ranges", "[view]")
 {
     constexpr string_view str{};
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(v.empty());
 }
 
@@ -49,21 +49,21 @@ TEST_CASE("UTF-8 -> UTF-16 view handles empty ranges", "[view]")
 TEST_CASE("UTF-8 -> UTF-32 view handles empty ranges", "[view]")
 {
     constexpr string_view str{};
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-16 -> UTF-8 view handles empty ranges", "[view]")
 {
     constexpr u16string_view str{};
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-16 -> UTF-16 view handles empty ranges", "[view]")
 {
     constexpr u16string_view str{};
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(v.empty());
 }
 
@@ -71,49 +71,49 @@ TEST_CASE("UTF-16 -> UTF-16 view handles empty ranges", "[view]")
 TEST_CASE("UTF-16 -> UTF-32 view handles empty ranges", "[view]")
 {
     constexpr u16string_view str{};
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-32 -> UTF-8 view handles empty ranges", "[view]")
 {
     constexpr u32string_view str{};
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-32 -> UTF-16 view handles empty ranges", "[view]")
 {
     constexpr u32string_view str{};
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("UTF-32 -> UTF-32 view handles empty ranges", "[view]")
 {
     constexpr u32string_view str{};
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("wchar -> UTF-8 view handles empty ranges", "[view]")
 {
     constexpr wstring_view str{};
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("wchar -> UTF-16 view handles empty ranges", "[view]")
 {
     constexpr wstring_view str{};
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(v.empty());
 }
 
 TEST_CASE("wchar -> UTF-32 view handles empty ranges", "[view]")
 {
     constexpr wstring_view str{};
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(v.empty());
 }
 
@@ -124,7 +124,7 @@ TEST_CASE("wchar -> UTF-32 view handles empty ranges", "[view]")
 TEST_CASE("UTF-8 -> UTF-8 view handles valid UTF correctly", "[view]")
 {
     constexpr char str[] = u8"" TEST_STRING;
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(rng::equal(str, v));
 }
 
@@ -132,7 +132,7 @@ TEST_CASE("UTF-8 -> UTF-16 view handles valid UTF correctly", "[view]")
 {
     constexpr char str[] = u8"" TEST_STRING;
     constexpr char16_t check[] = u"" TEST_STRING;
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -140,7 +140,7 @@ TEST_CASE("UTF-8 -> UTF-32 view handles valid UTF correctly", "[view]")
 {
     constexpr char str[] = u8"" TEST_STRING;
     constexpr char32_t check[] = U"" TEST_STRING;
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -148,7 +148,7 @@ TEST_CASE("UTF-16 -> UTF-8 view handles valid UTF correctly", "[view]")
 {
     constexpr char16_t str[] = u"" TEST_STRING;
     constexpr char check[] = u8"" TEST_STRING;
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -156,7 +156,7 @@ TEST_CASE("UTF-16 -> UTF-16 view handles valid UTF correctly", "[view]")
 {
     constexpr char16_t str[] = u"" TEST_STRING;
     constexpr char16_t check[] = u"" TEST_STRING;
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -164,7 +164,7 @@ TEST_CASE("UTF-16 -> UTF-32 view handles valid UTF correctly", "[view]")
 {
     constexpr char16_t str[] = u"" TEST_STRING;
     constexpr char32_t check[] = U"" TEST_STRING;
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -172,7 +172,7 @@ TEST_CASE("UTF-32 -> UTF-8 view handles valid UTF correctly", "[view]")
 {
     constexpr char32_t str[] = U"" TEST_STRING;
     constexpr char check[] = u8"" TEST_STRING;
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -180,7 +180,7 @@ TEST_CASE("UTF-32 -> UTF-16 view handles valid UTF correctly", "[view]")
 {
     constexpr char32_t str[] = U"" TEST_STRING;
     constexpr char16_t check[] = u"" TEST_STRING;
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -188,7 +188,7 @@ TEST_CASE("UTF-32 -> UTF-32 view handles valid UTF correctly", "[view]")
 {
     constexpr char32_t str[] = U"" TEST_STRING;
     constexpr char32_t check[] = U"" TEST_STRING;
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -196,7 +196,7 @@ TEST_CASE("wchar -> UTF-8 view handles valid UTF correctly", "[view]")
 {
     constexpr wchar_t str[] = L"" TEST_STRING;
     constexpr char check[] = u8"" TEST_STRING;
-    const auto v = view::as_utf8(str);
+    const auto v = view::utf8(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -204,7 +204,7 @@ TEST_CASE("wchar -> UTF-16 view handles valid UTF correctly", "[view]")
 {
     constexpr wchar_t str[] = L"" TEST_STRING;
     constexpr char16_t check[] = u"" TEST_STRING;
-    const auto v = view::as_utf16(str);
+    const auto v = view::utf16(str);
     REQUIRE(rng::equal(check, v));
 }
 
@@ -212,7 +212,7 @@ TEST_CASE("wchar -> UTF-32 view handles valid UTF correctly", "[view]")
 {
     constexpr wchar_t str[] = L"" TEST_STRING;
     constexpr char32_t check[] = U"" TEST_STRING;
-    const auto v = view::as_utf32(str);
+    const auto v = view::utf32(str);
     REQUIRE(rng::equal(check, v));
 }
 

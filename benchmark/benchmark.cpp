@@ -244,37 +244,37 @@ u16string range_u32_to_u16(const u32string& u32)
 inline
 u16string range_view_u8_to_u16(const string& u8)
 {
-    return tcb::utf_ranges::view::as_utf16(u8);
+    return tcb::utf_ranges::view::utf16(u8);
 }
 
 inline
 u32string range_view_u8_to_u32(const string& u8)
 {
-    return tcb::utf_ranges::view::as_utf32(u8);
+    return tcb::utf_ranges::view::utf32(u8);
 }
 
 inline
 string range_view_u16_to_u8(const u16string& u16)
 {
-    return tcb::utf_ranges::view::as_utf8(u16);
+    return tcb::utf_ranges::view::utf8(u16);
 }
 
 inline
 u32string range_view_u16_to_u32(const u16string& u16)
 {
-    return tcb::utf_ranges::view::as_utf32(u16);
+    return tcb::utf_ranges::view::utf32(u16);
 }
 
 inline
 string range_view_u32_to_u8(const u32string& u32)
 {
-    return tcb::utf_ranges::view::as_utf8(u32);
+    return tcb::utf_ranges::view::utf8(u32);
 }
 
 inline
 u16string range_view_u32_to_u16(const u32string& u32)
 {
-    return tcb::utf_ranges::view::as_utf16(u32);
+    return tcb::utf_ranges::view::utf16(u32);
 }
 
 } // end anonymous namespace

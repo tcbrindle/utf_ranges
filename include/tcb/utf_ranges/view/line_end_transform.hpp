@@ -76,9 +76,9 @@ auto line_end_transform(Rng&& range)
 {
     // Convert to UTF-32 and then back again
     using CharT = rng::range_value_t<Rng>;
-    using R = decltype(rng::view::all(as_utf32(std::forward<Rng>(range))));
+    using R = decltype(rng::view::all(utf32(std::forward<Rng>(range))));
     return utf_convert<CharT>(
-        line_end_transform_view<R>{rng::view::all(as_utf32(std::forward<Rng>(range)))}
+        line_end_transform_view<R>{rng::view::all(utf32(std::forward<Rng>(range)))}
     );
 }
 

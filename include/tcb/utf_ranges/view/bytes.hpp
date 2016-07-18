@@ -68,7 +68,7 @@ public:
 
 namespace view {
 
-struct as_bytes_fn {
+struct bytes_fn {
 
     template <typename Rng>
     bytes_view<rng::view::all_t<Rng>> operator()(Rng&& range) const
@@ -83,7 +83,7 @@ struct as_bytes_fn {
 
 };
 
-RANGES_INLINE_VARIABLE(rng::view::view<as_bytes_fn>, as_bytes);
+RANGES_INLINE_VARIABLE(rng::view::view<bytes_fn>, bytes);
 
 } // end namespace view
 } // end namespace utf_ranges

@@ -11,7 +11,7 @@
 TEST_CASE("Bytes view works for UTF-8", "[bytes]")
 {
     std::string str = u8"" TEST_STRING;
-    std::string test = str | tcb::utf_ranges::view::as_bytes;
+    std::string test = str | tcb::utf_ranges::view::bytes;
 
     REQUIRE(str == test);
 }
@@ -28,7 +28,7 @@ TEST_CASE("Bytes view works for UTF-16", "[bytes]")
     std::u16string u16 = u"" TEST_STRING;
     std::u32string u32 = U"" TEST_STRING;
 
-    std::string test = u16 | tcb::utf_ranges::view::as_bytes;
+    std::string test = u16 | tcb::utf_ranges::view::bytes;
 
     std::string u16bytes = std::wstring_convert<codecvt, char32_t>{}.to_bytes(u32);
 
