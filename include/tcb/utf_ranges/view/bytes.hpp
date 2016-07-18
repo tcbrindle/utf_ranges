@@ -1,11 +1,12 @@
 
-#pragma once
+#ifndef TCB_UTF_RANGES_VIEW_BYTES_HPP_INCLUDED
+#define TCB_UTF_RANGES_VIEW_BYTES_HPP_INCLUDED
 
 #include <range/v3/view_adaptor.hpp>
 #include <range/v3/view/view.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 using rng::static_const;
@@ -84,6 +85,8 @@ struct as_bytes_fn {
 
 RANGES_INLINE_VARIABLE(rng::view::view<as_bytes_fn>, as_bytes);
 
-}
-}
-}
+} // end namespace view
+} // end namespace utf_ranges
+} // end namespace tcb
+
+#endif // TCB_UTF_RANGES_VIEW_BYTES_HPP_INCLUDED

@@ -1,24 +1,24 @@
 
 #include "catch.hpp"
 
-#include <tcb/ranges/view/endian_convert.hpp>
+#include <tcb/utf_ranges/view/endian_convert.hpp>
 
 const auto to_little_endian = [] (const auto& in) {
-    using char_type = tcb::ranges::rng::range_value_t<decltype(in)>;
+    using char_type = ranges::range_value_t<decltype(in)>;
     std::basic_string<char_type> out;
     for (auto c : in) {
         out.push_back(boost::endian::native_to_little(
-                tcb::ranges::detail::make_swap_wrapper(c)).value);
+                tcb::utf_ranges::detail::make_swap_wrapper(c)).value);
     }
     return out;
 };
 
 const auto to_big_endian = [] (const auto& in) {
-    using char_type = tcb::ranges::rng::range_value_t<decltype(in)>;
+    using char_type = ranges::range_value_t<decltype(in)>;
     std::basic_string<char_type> out;
     for (auto c : in) {
         out.push_back(boost::endian::native_to_big(
-                tcb::ranges::detail::make_swap_wrapper(c)).value);
+                tcb::utf_ranges::detail::make_swap_wrapper(c)).value);
     }
     return out;
 };
@@ -44,7 +44,7 @@ const std::u16string test_string16b = to_big_endian(test_string16n);
 const std::u32string test_string32b = to_big_endian(test_string32n);
 const std::wstring test_stringwb = to_big_endian(test_stringwn);
 
-using tcb::ranges::view::endian_convert;
+using tcb::utf_ranges::view::endian_convert;
 using namespace boost::endian;
 
 TEST_CASE("Byte swap native-to-native works", "[endian]")

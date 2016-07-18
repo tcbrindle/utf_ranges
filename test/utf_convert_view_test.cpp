@@ -1,12 +1,12 @@
 
 #include "catch.hpp"
 
-#include <tcb/ranges/view.hpp>
+#include <tcb/utf_ranges/view.hpp>
 #include <range/v3/algorithm/equal.hpp>
 
 #include <experimental/string_view>
 
-using namespace tcb::ranges;
+using namespace tcb::utf_ranges;
 using std::experimental::string_view;
 using std::experimental::u16string_view;
 using std::experimental::u32string_view;
@@ -21,7 +21,7 @@ using std::experimental::wstring_view;
 TEST_CASE("utf_convert_view can be default constructed", "[view]")
 {
     constexpr char str[] = u8"" TEST_STRING;
-    const auto v = tcb::ranges::view::utf_convert_view<
+    const auto v = tcb::utf_ranges::view::utf_convert_view<
             rng::view::all_t<decltype(str)>, char, char32_t>{};
     static_assert(rng::ForwardRange<decltype(v)>(), "");
     REQUIRE(v.empty());

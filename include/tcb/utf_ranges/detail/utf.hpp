@@ -5,13 +5,13 @@
 //  accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
-#ifndef TCB_RANGES_DETAIL_UTF_HPP_INCLUDED
-#define TCB_RANGES_DETAIL_UTF_HPP_INCLUDED
+#ifndef TCB_UTF_RANGES_DETAIL_UTF_HPP_INCLUDED
+#define TCB_UTF_RANGES_DETAIL_UTF_HPP_INCLUDED
 
 #include <cstdint>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 namespace detail {
 
 /// \cond INTERNAL
@@ -449,10 +449,7 @@ struct utf_traits<CharType, 4> {
 }; // utf32
 
 } // end namespace detail
-} // end namespace ranges
+} // end namespace utf_ranges
 } // end namespace tcb
 
-#endif
-
-// vim: tabstop=4 expandtab shiftwidth=4 softtabstop=4
-
+#endif // TCB_UTF_RANGES_DETAIL_UTF_HPP_INCLUDED

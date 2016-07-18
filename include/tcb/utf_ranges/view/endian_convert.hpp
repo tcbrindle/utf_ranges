@@ -1,12 +1,13 @@
 
-#pragma once
+#ifndef TCB_UTF_RANGES_VIEW_ENDIAN_CONVERT_HPP_INCLUDED
+#define TCB_UTF_RANGES_VIEW_ENDIAN_CONVERT_HPP_INCLUDED
 
 #include <boost/endian/conversion.hpp>
 #include <range/v3/view_adaptor.hpp>
 #include <range/v3/view/transform.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 using rng::static_const;
@@ -75,6 +76,8 @@ inline namespace
     constexpr auto& endian_convert = static_const<rng::view::view<endian_convert_fn<DestOrder>>>::value;
 }
 
-}
-}
-}
+} // end namespace view
+} // end namespace utf_ranges
+} // end namespace tcb
+
+#endif // TCB_UTF_RANGES_VIEW_ENDIAN_CONVERT_HPP_INCLUDED

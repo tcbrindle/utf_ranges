@@ -1,12 +1,12 @@
 
-#ifndef TCB_UNICODE_RANGES_LINE_END_TRANSFORM_HPP_INCLUDED
-#define TCB_UNICODE_RANGES_LINE_END_TRANSFORM_HPP_INCLUDED
+#ifndef TCB_UTF_RANGES_VIEW_LINE_END_TRANSFORM_HPP_INCLUDED
+#define TCB_UTF_RANGES_VIEW_LINE_END_TRANSFORM_HPP_INCLUDED
 
 #include <range/v3/view_adaptor.hpp>
-#include <tcb/ranges/view/utf_convert.hpp>
+#include <tcb/utf_ranges/view/utf_convert.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 
@@ -84,7 +84,7 @@ auto line_end_transform(Rng&& range)
 
 
 } // end namespace view
-} // end namespace ranges
+} // end namespace utf_ranges
 } // end namespace tcb
 
-#endif
+#endif // TCB_UTF_RANGES_VIEW_LINE_END_TRANSFORM_HPP_INCLUDED

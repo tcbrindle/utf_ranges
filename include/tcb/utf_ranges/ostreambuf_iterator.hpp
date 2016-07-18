@@ -1,10 +1,11 @@
 
-#pragma once
+#ifndef TCB_UTF_RANGES_OSTREAMBUF_ITERATOR_HPP_INCLUDED
+#define TCB_UTF_RANGES_OSTREAMBUF_ITERATOR_HPP_INCLUDED
 
 #include <range/v3/range_fwd.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 template <typename Char = char, typename Traits = std::char_traits <Char>>
 struct ostreambuf_iterator {
@@ -48,5 +49,7 @@ public:
     }
 };
 
-}
-}
+} // end namespace utf_ranges
+} // end namespace tcb
+
+#endif // TCB_UTF_RANGES_OSTREAMBUF_ITERATOR_HPP_INCLUDED

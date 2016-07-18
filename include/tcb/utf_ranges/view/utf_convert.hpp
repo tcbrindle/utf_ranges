@@ -1,15 +1,15 @@
 
-#ifndef TCB_RANGES_VIEW_UTF_CONVERT_HPP
-#define TCB_RANGES_VIEW_UTF_CONVERT_HPP
+#ifndef TCB_UTF_RANGES_VIEW_UTF_CONVERT_HPP_INCLUDED
+#define TCB_UTF_RANGES_VIEW_UTF_CONVERT_HPP_INCLUDED
 
 #include <range/v3/view_facade.hpp>
 #include <range/v3/view/all.hpp>
 #include <range/v3/view/view.hpp>
 
-#include <tcb/ranges/detail/utf.hpp>
+#include <tcb/utf_ranges/detail/utf.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 using rng::static_const;
@@ -28,9 +28,8 @@ class utf_convert_view
                   last_(rng::end(parent.range_))
         {
             if (first_ != last_) {
-                char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
-                                                                         last_);
-                next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+                char32_t c = detail::utf_traits<InCharT>::decode(first_, last_);
+                next_chars_ = detail::utf_traits<OutCharT>::encode(c);
             }
         }
 
@@ -39,17 +38,16 @@ class utf_convert_view
                   last_(rng::end(parent.range_))
         {
             if (first_ != last_) {
-                char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
-                                                                         last_);
-                next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+                char32_t c = detail::utf_traits<InCharT>::decode(first_, last_);
+                next_chars_ = detail::utf_traits<OutCharT>::encode(c);
             }
         }
 
         void next()
         {
             if (++idx_ == next_chars_.size() && first_ != last_) {
-                char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_, last_);
-                next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+                char32_t c = detail::utf_traits<InCharT>::decode(first_, last_);
+                next_chars_ = detail::utf_traits<OutCharT>::encode(c);
                 idx_ = 0;
             }
         }
@@ -70,7 +68,7 @@ class utf_convert_view
                     std::tie(other.next_chars_);
         }
 
-        ranges::detail::encoded_chars<OutCharT> next_chars_;
+        detail::encoded_chars<OutCharT> next_chars_;
         char idx_ = 0;
         rng::range_iterator_t<Range> first_{};
         rng::range_sentinel_t<Range> last_{};
@@ -163,9 +161,8 @@ struct as_utf32_fn {
 
 RANGES_INLINE_VARIABLE(rng::view::view<as_utf32_fn>, as_utf32);
 
-
 } // end namespace view
-} // end namespace ranges
+} // end namespace utf_ranges
 } // end namespace tcb
 
-#endif // TCB_RANGES_VIEW_UTF_CONVERT_HPP
+#endif // TCB_UTF_RANGES_VIEW_UTF_CONVERT_HPP_INCLUDED

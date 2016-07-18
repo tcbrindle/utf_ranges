@@ -10,8 +10,8 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 //
 
-#ifndef TCB_RANGES_ISTREAMBUF_RANGE_HPP
-#define TCB_RANGES_ISTREAMBUF_RANGE_HPP
+#ifndef TCB_UTF_RANGES_ISTREAMBUF_RANGE_HPP_INCLUDED
+#define TCB_UTF_RANGES_ISTREAMBUF_RANGE_HPP_INCLUDED
 
 #include <istream>
 #include <range/v3/range_fwd.hpp>
@@ -20,7 +20,7 @@
 #include <range/v3/utility/static_const.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 using rng::static_const;
@@ -99,7 +99,7 @@ struct istreambuf_fn
 RANGES_INLINE_VARIABLE(istreambuf_fn, istreambuf);
 
 
-} // end namespace ranges
+} // end namespace utf_ranges
 } // end namespace tcb
 
-#endif
+#endif // TCB_UTF_RANGES_ISTREAMBUF_RANGE_HPP_INCLUDED

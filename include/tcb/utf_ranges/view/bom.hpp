@@ -1,8 +1,9 @@
 
-#pragma once
+#ifndef TCB_UTF_RANGES_VIEW_BOM_HPP_INCLUDED
+#define TCB_UTF_RANGES_VIEW_BOM_HPP_INCLUDED
 
-#include <tcb/ranges/view/endian_convert.hpp>
-#include <tcb/ranges/view/utf_convert.hpp>
+#include <tcb/utf_ranges/view/endian_convert.hpp>
+#include <tcb/utf_ranges/view/utf_convert.hpp>
 
 #include <range/v3/algorithm/copy_n.hpp>
 #include <range/v3/algorithm/equal.hpp>
@@ -13,7 +14,7 @@
 #include <range/v3/view/take.hpp>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 using rng::static_const;
 using rng::operator|;
@@ -213,6 +214,8 @@ struct add_bom_fn {
 
 RANGES_INLINE_VARIABLE(rng::view::view<add_bom_fn>, add_bom)
 
-}
-}
-}
+} // end namespace view
+} // end namespace utf_ranges
+} // end namespace tcb
+
+#endif // TCB_UTF_RANGES_VIEW_BOM_HPP_INCLUDED

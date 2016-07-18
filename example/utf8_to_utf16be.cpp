@@ -2,12 +2,12 @@
 #include <iostream>
 #include <fstream>
 
-#include <tcb/ranges/view.hpp>
-#include <tcb/ranges/istreambuf_range.hpp>
-#include <tcb/ranges/ostreambuf_iterator.hpp>
+#include <tcb/utf_ranges/view.hpp>
+#include <tcb/utf_ranges/istreambuf_range.hpp>
+#include <tcb/utf_ranges/ostreambuf_iterator.hpp>
 
 namespace rng = ::ranges::v3;
-namespace utf = ::tcb::ranges;
+namespace utf = ::tcb::utf_ranges;
 
 int main(int argc, char** argv)
 {

@@ -1,7 +1,7 @@
 
 #include "catch.hpp"
 
-#include <tcb/ranges/ostreambuf_iterator.hpp>
+#include <tcb/utf_ranges/ostreambuf_iterator.hpp>
 
 #include <sstream>
 #include <range/v3/algorithm/copy.hpp>
@@ -12,7 +12,7 @@ TEST_CASE("ostreambuf_iterator works as expected", "[ostreambuf_iterator]")
 {
     std::ostringstream ss;
 
-    ranges::copy(test_str, tcb::ranges::ostreambuf_iterator<char>(ss));
+    ranges::copy(test_str, tcb::utf_ranges::ostreambuf_iterator<char>(ss));
 
     REQUIRE(ss.str() == test_str);
 }

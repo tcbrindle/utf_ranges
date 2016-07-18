@@ -1,7 +1,7 @@
 
 cmake_minimum_required(VERSION 3.1)
 
-project(range-utf-utils CXX)
+project(utf_ranges CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -22,7 +22,7 @@ endif()
 find_package(Boost COMPONENTS system REQUIRED)
 
 include_directories(include)
-set(RANGE_INCLUDE_DIR "${range-utf-utils_SOURCE_DIR}/external/range-v3/include")
+set(RANGE_INCLUDE_DIR "${utf_ranges_SOURCE_DIR}/external/range-v3/include")
 
 add_subdirectory(benchmark)
 add_subdirectory(example)

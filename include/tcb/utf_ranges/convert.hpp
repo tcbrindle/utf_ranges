@@ -1,15 +1,15 @@
 
-#ifndef TCB_RANGES_CONVERT_HPP_INCLUDED
-#define TCB_RANGES_CONVERT_HPP_INCLUDED
+#ifndef TCB_UTF_RANGES_CONVERT_HPP_INCLUDED
+#define TCB_UTF_RANGES_CONVERT_HPP_INCLUDED
 
-#include <tcb/ranges/detail/utf.hpp>
+#include <tcb/utf_ranges/detail/utf.hpp>
 
 #include <range/v3/range_fwd.hpp>
 
 #include <string>
 
 namespace tcb {
-namespace ranges {
+namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 
@@ -81,7 +81,7 @@ std::wstring to_wstsring(Range&& range)
     return to_utf_string<Range, wchar_t>(std::forward<Range>(range));
 }
 
-} // end namespace ranges
+} // end namespace utf_ranges
 } // end namespace tcb
 
-#endif
+#endif // TCB_UTF_RANGES_CONVERT_HPP_INCLUDED
