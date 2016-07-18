@@ -15,6 +15,15 @@ using rng::operator|;
 
 namespace detail {
 
+// This stuff is necessary because Boost.Endian doesn't seem to handle
+// byte-swapping character types very well. [unsigned] char should just be
+// returned unaltered, but instead it gets promoted to int, byte-swapped and
+// converted back to char, which means that it is always zero. The same happens
+// to char16_t. To get around this, we wrap values in a swap_wrapper<> struct,
+// with "overloads" for the endian_reverse functions for char and char16_t
+// (actually function that get found by the Boost library via ADL). All other
+// types get forwarded to the regular boost conversion function.
+
 template <typename T>
 struct swap_wrapper {
     T value;
