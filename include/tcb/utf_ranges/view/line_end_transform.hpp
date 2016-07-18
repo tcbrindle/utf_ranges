@@ -10,8 +10,6 @@ namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 
-namespace view {
-
 template <typename Rng>
 class line_end_transform_view
         : public rng::view_adaptor<line_end_transform_view<Rng>, Rng>
@@ -70,6 +68,8 @@ public:
         : rng::view_adaptor<line_end_transform_view, Rng>{std::move(rng)}
     {}
 };
+
+namespace view {
 
 template <typename Rng>
 auto line_end_transform(Rng&& range)

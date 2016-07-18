@@ -13,9 +13,6 @@ namespace utf_ranges {
 
 namespace rng = ::ranges::v3;
 using rng::static_const;
-using rng::operator|;
-
-namespace view {
 
 template <typename Range, typename InCharT, typename OutCharT>
 class utf_convert_view
@@ -90,6 +87,7 @@ private:
     friend rng::range_access;
 };
 
+namespace view {
 
 template <typename OutCharT>
 struct utf_convert_fn {

@@ -21,7 +21,7 @@ using std::experimental::wstring_view;
 TEST_CASE("utf_convert_view can be default constructed", "[view]")
 {
     constexpr char str[] = u8"" TEST_STRING;
-    const auto v = tcb::utf_ranges::view::utf_convert_view<
+    const auto v = tcb::utf_ranges::utf_convert_view<
             rng::view::all_t<decltype(str)>, char, char32_t>{};
     static_assert(rng::ForwardRange<decltype(v)>(), "");
     REQUIRE(v.empty());
