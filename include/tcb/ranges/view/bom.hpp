@@ -81,36 +81,56 @@ bool has_swapped_bom(const Range& range)
     }
 }
 
-template <typename Range>
-struct concat_range : rng::view_interface<concat_range<Range>> {
+template <typename Rng>
+struct bom_concat_view : rng::view_adaptor<bom_concat_view<Rng>, Rng>
+{
 private:
-    using value_type = rng::range_value_t<Range>;
-    std::basic_string<value_type> buf_;
-    Range range_;
-    boost::endian::order order_ = boost::endian::order::native;
-    using view_type = decltype(endian_convert<>(rng::view::concat(buf_, range_), order_));
-    view_type view_ = endian_convert<>(rng::view::concat(buf_, range_), order_);
+    using string_type = std::basic_string<rng::range_value_t<Rng>>;
+
+    struct adaptor : rng::adaptor_base {
+
+        adaptor() = default;
+
+        adaptor(bom_concat_view& view)
+                : bom_first_(view.bom_.begin()),
+                  bom_last_(view.bom_.end())
+        {}
+
+        auto get(rng::range_iterator_t<Rng> it) const
+        {
+            if (bom_first_ != bom_last_) {
+                return *bom_first_;
+            } else {
+                return *it;
+            }
+        }
+
+        void next(rng::range_iterator_t<Rng>& it)
+        {
+            if (bom_first_ != bom_last_) {
+                ++bom_first_;
+            } else {
+                ++it;
+            }
+        }
+
+        rng::range_iterator_t<string_type> bom_first_{};
+        rng::range_sentinel_t<string_type> bom_last_{};
+    };
+
 
 public:
-    auto begin() { return rng::begin(view_); }
+    bom_concat_view() = default;
 
-    CONCEPT_REQUIRES(rng::Range<const view_type>())
-    auto begin() const { return rng::begin(view_); }
-
-    auto end() { return rng::end(view_); }
-
-    CONCEPT_REQUIRES(rng::Range<const view_type>())
-    auto end() const { return rng::end(view_); }
-
-    concat_range() = default;
-
-    concat_range(std::basic_string<value_type> buf,
-                 rng::view::all_t<Range> range,
-                 boost::endian::order o)
-            : buf_(std::move(buf)),
-              range_(std::move(range)),
-              order_{o}
+    bom_concat_view(Rng rng, string_type bom)
+            : rng::view_adaptor<bom_concat_view, Rng>(std::move(rng)),
+              bom_(std::move(bom))
     {}
+
+    adaptor begin_adaptor() { return adaptor{*this}; }
+
+private:
+    string_type bom_;
 };
 
 } // end namespace detail
@@ -159,9 +179,11 @@ struct consume_bom_fn {
             byte_order = detail::nonnative_order;
         }
 
-        return detail::concat_range<rng::view::all_t<Range>>{std::move(buf),
-                                                             rng::view::all(std::forward<Range>(range)),
-                                                             byte_order};
+        return endian_convert<>(
+                detail::bom_concat_view<rng::view::all_t<Range>>(
+                        rng::view::all(std::forward<Range>(range)),
+                        std::move(buf)),
+                byte_order);
     }
 
     decltype(auto) operator()() const {
