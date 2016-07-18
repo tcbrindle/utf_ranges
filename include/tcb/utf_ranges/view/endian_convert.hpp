@@ -58,6 +58,17 @@ inline swap_wrapper<char16_t> endian_reverse(swap_wrapper<char16_t> s) noexcept
     );
 }
 
+inline swap_wrapper<wchar_t> endian_reverse(swap_wrapper<wchar_t> s) noexcept
+{
+    using traits = std::char_traits<wchar_t>;
+    static_assert(sizeof(traits::int_type) == sizeof(wchar_t), "");
+
+    return swap_wrapper<wchar_t>{
+            traits::to_char_type(
+                    boost::endian::endian_reverse(traits::to_int_type(s.value)))
+    };
+}
+
 } // end namespace detail
 
 namespace view {
