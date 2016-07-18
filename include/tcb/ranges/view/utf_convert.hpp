@@ -27,26 +27,27 @@ class utf_convert_view
                 : first_(rng::begin(parent.range_)),
                   last_(rng::end(parent.range_))
         {
-            prev_ = first_;
-            char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
-                                                                     last_);
-            next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+            if (first_ != last_) {
+                char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
+                                                                         last_);
+                next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+            }
         }
 
         cursor(const utf_convert_view& parent)
                 : first_(rng::begin(parent.range_)),
                   last_(rng::end(parent.range_))
         {
-            prev_ = first_;
-            char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
-                                                                     last_);
-            next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+            if (first_ != last_) {
+                char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_,
+                                                                         last_);
+                next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
+            }
         }
 
         void next()
         {
-            if (++idx_ == next_chars_.size()) {
-                prev_ = first_;
+            if (++idx_ == next_chars_.size() && first_ != last_) {
                 char32_t c = ranges::detail::utf_traits<InCharT>::decode(first_, last_);
                 next_chars_ = ranges::detail::utf_traits<OutCharT>::encode(c);
                 idx_ = 0;
@@ -60,7 +61,7 @@ class utf_convert_view
 
         bool done() const
         {
-            return prev_ == last_;
+            return first_ == last_ && idx_ == next_chars_.size();
         }
 
         bool equal(const cursor& other) const
@@ -72,8 +73,6 @@ class utf_convert_view
         ranges::detail::encoded_chars<OutCharT> next_chars_;
         char idx_ = 0;
         rng::range_iterator_t<Range> first_{};
-        // FIXME: Hack hack hack!
-        rng::range_iterator_t<Range> prev_{};
         rng::range_sentinel_t<Range> last_{};
     };
 
