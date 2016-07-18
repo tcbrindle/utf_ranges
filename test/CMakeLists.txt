@@ -10,4 +10,7 @@ add_executable(utf_ranges_test
     utf_convert_view_test.cpp
     )
 
-target_include_directories(utf_ranges_test PRIVATE ${RANGE_INCLUDE_DIR})
+target_include_directories(utf_ranges_test PRIVATE
+        ${RANGE_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIR}
+        )
