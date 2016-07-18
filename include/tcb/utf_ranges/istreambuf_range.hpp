@@ -1,8 +1,8 @@
 
-//
-//  istreambuf_range.hpp
-//  Based on range-v3/istream_range.hpp
+//  Based on istreambuf_range.hpp from Range-V3
 //  Copyright Eric Niebler 2013-2014
+//
+//  Modifications (c) 2016 Tristan Brindle
 //
 //  Use, modification and distribution is subject to the
 //  Boost Software License, Version 1.0. (See accompanying

@@ -1,4 +1,14 @@
 
+//  Based on ranges::ostream_iterator from Range-V3
+//  Copyright Eric Niebler 2013-2014
+//
+//  Modifications (c) 2016 Tristan Brindle
+//
+//  Use, modification and distribution is subject to the
+//  Boost Software License, Version 1.0. (See accompanying
+//  file LICENSE_1_0.txt or copy at
+//  http://www.boost.org/LICENSE_1_0.txt)
+
 #ifndef TCB_UTF_RANGES_OSTREAMBUF_ITERATOR_HPP_INCLUDED
 #define TCB_UTF_RANGES_OSTREAMBUF_ITERATOR_HPP_INCLUDED
 
