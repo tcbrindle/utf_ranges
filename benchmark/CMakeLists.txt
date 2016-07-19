@@ -1,6 +1,6 @@
 
 
-find_package(Boost COMPONENTS locale REQUIRED)
+find_package(Boost COMPONENTS locale)
 
 if (Boost_FOUND)
     add_executable(benchmark benchmark.cpp)

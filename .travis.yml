@@ -20,6 +20,7 @@ matrix:
         apt:
           packages:
             - g++-5
+            - libboost-system-dev
           sources: &sources
             - ubuntu-toolchain-r-test
             #- llvm-toolchain-precise-3.6
@@ -36,6 +37,7 @@ matrix:
         apt:
           packages:
             - g++-6
+            - libboost-system-dev
           sources: *sources
 
     - os: linux
@@ -51,6 +53,7 @@ matrix:
           packages:
             - clang-3.6
             - g++-5
+            - libboost-system-dev
           sources: *sources
 
     - os: linux
@@ -87,7 +90,7 @@ before_install:
   - set -e
   - |
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew update && brew install cmake;
+      brew update && brew install cmake boost;
       if [[ "${COMPILER}" == "g++-6" ]]; then
         brew install gcc
       fi
