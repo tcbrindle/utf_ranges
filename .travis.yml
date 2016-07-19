@@ -23,7 +23,7 @@ matrix:
             - libboost-system-dev
           sources: &sources
             - ubuntu-toolchain-r-test
-            #- llvm-toolchain-precise-3.6
+            - llvm-toolchain-precise-3.7
 
     - os: linux
       env: CONFIGURATION=Release COMPILER=g++-5
@@ -46,20 +46,20 @@ matrix:
       addons: *gcc6
 
     - os: linux
-      env: CONFIGURATION=Debug COMPILER=clang++-3.6
+      env: CONFIGURATION=Debug COMPILER=clang++-3.7
       compiler: clang
-      addons: &clang36
+      addons: &clang37
         apt:
           packages:
-            - clang-3.6
+            - clang-3.7
             - g++-5
             - libboost-system-dev
           sources: *sources
 
     - os: linux
-      env: CONFIGURATION=Release COMPILER=clang++-3.6
+      env: CONFIGURATION=Release COMPILER=clang++-3.7
       compiler: clang
-      addons: *clang36
+      addons: *clang37
 
     - os: osx
       env: CONFIGURATION=Debug COMPILER=clang++
@@ -90,7 +90,9 @@ before_install:
   - set -e
   - |
     if [[ "${TRAVIS_OS_NAME}" == "osx" ]]; then
-      brew update && brew install cmake boost;
+      brew update
+      brew outdated cmake || brew upgrade cmake
+      brew outdated boost || brew upgrade boost
       if [[ "${COMPILER}" == "g++-6" ]]; then
         brew install gcc
       fi
@@ -106,6 +108,11 @@ install:
       CMAKE_URL="https://cmake.org/files/v3.5/cmake-3.5.2-Linux-x86_64.tar.gz"
       mkdir cmake && travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
       export PATH=${TRAVIS_BUILD_DIR}/cmake/bin:${PATH}
+
+      BOOST_URL="http://sourceforge.net/projects/boost/files/boost/1.61.0/boost_1_61_0.tar.gz"
+      cd ${TRAVIS_BUILD_DIR}
+      mkdir boost && travis_retry wget -O - ${BOOST_URL} | tar --strip-components=1 -xz -C boost
+      export BOOST_ROOT="${TRAVIS_BUILD_DIR}/boost"
     fi
 
 # Run cmake to generate makefiles in 'builds' directory.
