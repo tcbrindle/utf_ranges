@@ -96,9 +96,6 @@ before_install:
       if [[ "${COMPILER}" == "g++-6" ]]; then
         brew install gcc
       fi
-      if [[ "${DOCUMENTATION}"  == "true" ]]; then
-        brew install doxygen
-      fi
     fi
 
 # CMake install taken from https://github.com/boostorg/hana/blob/master/.travis.yml
@@ -127,25 +124,6 @@ script:
   - cmake --build .
   - ./test/utf_ranges_test
 
-after_success:
-  - |
-    if [[ "${DOCUMENTATION}" == "true" ]]; then
-      cmake --build . --target doc
-      if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "master" ]]; then
-        # Suppress output to avoid leaking the token when the command fails
-        git clone https://tcbrindle:${GITHUB_TOKEN}@github.com/tcbrindle/utf_ranges --depth 1 --branch=gh-pages gh-pages &>/dev/null
-        rm -rf gh-pages/{search,*.png,*.css,*.js,*.html}
-        cp -R doc/html/* gh-pages/
-        pushd gh-pages/
-        git config --global user.name "Travis Bot"
-        git config --global user.email "travis@travis-ci.org"
-        git add --all .
-        git commit --allow-empty -m "Update to ${TRAVIS_COMMIT:0:7}"
-        # Suppress output to avoid leaking the token
-        travis_retry git push origin gh-pages &>/dev/null
-        popd
-      fi
-    fi
 
 notifications:
   email: false
